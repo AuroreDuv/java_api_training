@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Launcher {
-    public HttpServer start_server(int port) throws IOException {
+    public HttpServer startServer(int port) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         ExecutorService executor = Executors.newFixedThreadPool(1);
         server.createContext("/ping", new Ping());
@@ -23,14 +23,14 @@ public class Launcher {
         return server;
     }
 
-    public void stop_server(HttpServer server) {
+    public void stopServer(HttpServer server) {
         server.stop(0);
     }
 
     public static void main(String[] args) throws IOException {
         int port = Integer.parseInt(args[0]);
         Launcher launcher = new Launcher();
-        launcher.start_server(port);
+        launcher.startServer(port);
 
         if (args.length != 1) {
             String adversaryUrl = args[1];

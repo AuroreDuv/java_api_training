@@ -13,7 +13,7 @@ class PingTest {
     void get_handler_test_ping_prints_hello() throws Exception {
         int port = 9876;
         Launcher launcher = new Launcher();
-        HttpServer server = launcher.start_server(port);
+        HttpServer server = launcher.startServer(port);
 
         ProcessBuilder pb = new ProcessBuilder("curl", "http://localhost:9876/ping");
         Process p = pb.start();
@@ -25,6 +25,6 @@ class PingTest {
         Assertions.assertEquals("OK", br.readLine());
 
         p.destroy();
-        launcher.stop_server(server);
+        launcher.stopServer(server);
     }
 }
