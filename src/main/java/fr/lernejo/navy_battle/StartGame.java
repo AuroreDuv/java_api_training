@@ -25,5 +25,9 @@ class StartGame implements HttpHandler {
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(body.getBytes());
         }
+
+        JSONObject request = new JSONObject(new JSONTokener(exchange.getRequestBody()));
+        ProcessBuilder pb = new ProcessBuilder("curl", request.get("url") + "/api/game/fire?cell=B2");
+        pb.start();
     }
 }
