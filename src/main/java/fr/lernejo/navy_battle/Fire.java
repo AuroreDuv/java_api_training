@@ -34,6 +34,7 @@ public class Fire implements HttpHandler {
         shipState = getConsequence(x, y);
         shipLeft = gameGrid.isShipLeftOnGrid();
         body = "{\"consequence\": \"" + shipState + "\", \"shipLeft\": " + shipLeft + "}";
+        exchange.getResponseHeaders().set("Content-type", "application/json");
         exchange.sendResponseHeaders(202, body.length());
         return body;
     }
@@ -44,7 +45,6 @@ public class Fire implements HttpHandler {
 
         try {
             body = constructResponseBody(exchange);
-            exchange.getResponseHeaders().set("Content-type", "application/json");
         } catch (Exception e) {
             body = "Bad Request";
             exchange.sendResponseHeaders(400, body.length());
