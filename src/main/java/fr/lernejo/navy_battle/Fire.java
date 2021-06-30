@@ -23,6 +23,8 @@ public class Fire implements HttpHandler {
                 return "sunk";
             }
         }
+        Ship s = new Ship("miss", 0);
+        gameGrid.colorMissedShip(x, y);
         return "miss";
     }
 

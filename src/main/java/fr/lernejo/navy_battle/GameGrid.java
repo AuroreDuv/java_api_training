@@ -94,6 +94,10 @@ class GameGrid {
         this.grid[x][y] = new Ship("hit", 0);
     }
 
+    public void colorMissedShip(int x, int y) {
+        this.grid[x][y] = new Ship("miss", 0);
+    }
+
     public Ship[][] get_grid() {
         return this.grid;
     }

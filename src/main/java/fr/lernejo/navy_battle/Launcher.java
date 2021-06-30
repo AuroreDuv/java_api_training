@@ -8,6 +8,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,6 +21,11 @@ public class Launcher {
                 Ship elmt = gameGrid.get_grid()[i][j];
                 if (elmt == null) {
                     System.out.print(".  |  ");
+                }
+                else if (elmt.get_slug().equals("miss")) {
+                    System.out.print("\u001B[31m" + "." + "\u001B[0m");
+                    System.out.print("  |  ");
+                    gameGrid.get_grid()[i][j] = null;
                 }
                 else if (elmt.get_slug().equals("hit")) {
                     System.out.print("\u001B[31m" + "X" + "\u001B[0m");
@@ -68,6 +74,16 @@ public class Launcher {
                 .build();
 
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+
+            Random random = new Random();
+
+            char randomLetter = (char)(random.nextInt(10) + 65);
+            int randomY = random.nextInt(11);
+            String coordinates = randomLetter + Integer.toString(randomY);
+
+            HttpRequest getRequest = HttpRequest.newBuilder().uri(URI.create("http://localhost:" + port + "/api/game/fire?cell=" + coordinates))
+                .build();
+            client.sendAsync(getRequest, HttpResponse.BodyHandlers.ofString());
         }
     }
 }
