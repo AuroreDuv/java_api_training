@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-class CallGetHandlerTest {
+class PingTest {
     @Test
     void get_handler_test_ping_prints_hello() throws Exception {
         int port = 9876;

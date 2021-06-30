@@ -15,8 +15,8 @@ public class Launcher {
     public HttpServer start_server(int port) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         ExecutorService executor = Executors.newFixedThreadPool(1);
-        server.createContext("/ping", new CallGetHandler());
-        server.createContext("/api/game/start", new CallPostHandler());
+        server.createContext("/ping", new Ping());
+        server.createContext("/api/game/start", new StartGame());
         server.setExecutor(executor);
         server.start();
 

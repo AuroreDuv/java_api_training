@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-class CallPostHandlerTest {
+class StartGameTest {
     @Test
     void get_handler_test_api_game_start_with_no_request() throws Exception {
         int port = 9876;
