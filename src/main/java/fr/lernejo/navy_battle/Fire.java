@@ -56,7 +56,7 @@ public class Fire implements HttpHandler {
         HttpRequest getRequest = HttpRequest.newBuilder()
             .uri(URI.create("http://localhost:" + adversaryPort + "/api/game/fire?cell=" + coordinates))
             .setHeader("Accept", "application/json").setHeader("Content-Type", "application/json")
-            .setHeader("X-Adversary-Port", Integer.toString(myPort)).GET().build();
+            .setHeader("X-Adversary-Port", Integer.toString(adversaryPort)).GET().build();
         client.sendAsync(getRequest, HttpResponse.BodyHandlers.ofString());
     }
 
@@ -73,6 +73,6 @@ public class Fire implements HttpHandler {
         StartStopServer startStopServer = new StartStopServer(); startStopServer.displayGrid(gameGrid);
         try (OutputStream os = exchange.getResponseBody()) { os.write(body.getBytes()); }
         int myPort = parsePort(exchange.getRequestHeaders().getFirst("Host"));
-        if (gameGrid.isShipLeftOnGrid()) { Fire fire = new Fire(null); fire.randomFire(myPort, adversaryPort); }
+        if (gameGrid.isShipLeftOnGrid()) { this.randomFire(myPort, adversaryPort); }
     }
 }
