@@ -63,7 +63,9 @@ public class Fire implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         String body; int adversaryPort = 0;
         try {
-            adversaryPort = Integer.parseInt(exchange.getRequestHeaders().getFirst("X-Adversary-Port"));
+            if (exchange.getRequestHeaders().getFirst("X-Adversary-Port") != null) {
+                adversaryPort = Integer.parseInt(exchange.getRequestHeaders().getFirst("X-Adversary-Port"));
+            }
             body = constructResponseBody(exchange);
             exchange.getResponseHeaders().set("Content-type", "application/json");
             exchange.sendResponseHeaders(202, body.length());
