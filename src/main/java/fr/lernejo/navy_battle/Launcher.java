@@ -59,24 +59,6 @@ public class Launcher {
         server.stop(0);
     }
 
-    public void randomFire(int port, int adversaryPort) {
-        Random random = new Random();
-
-        char randomLetter = (char)(random.nextInt(10) + 65);
-        int randomY = random.nextInt(11);
-        String coordinates = randomLetter + Integer.toString(randomY);
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest getRequest = HttpRequest.newBuilder()
-            .uri(URI.create("http://" + adversaryPort + "/api/game/fire?host=" + port + "&cell=" + coordinates))
-            .setHeader("Accept", "application/json")
-            .setHeader("Content-Type", "application/json")
-            .GET()
-            .build();
-
-        client.sendAsync(getRequest, HttpResponse.BodyHandlers.ofString());
-    }
-
     public static void main(String[] args) throws IOException, InterruptedException {
         int port = Integer.parseInt(args[0]);
         Launcher launcher = new Launcher();
