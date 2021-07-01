@@ -2,9 +2,16 @@ package fr.lernejo.navy_battle;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Random;
 
 public class Fire implements HttpHandler {
     final private GameGrid gameGrid;
@@ -29,7 +36,8 @@ public class Fire implements HttpHandler {
     }
 
     public String constructResponseBody(HttpExchange exchange) throws IOException {
-        String cell = exchange.getRequestURI().getQuery().replace("cell=", "");
+        String query = exchange.getRequestURI().getQuery();
+        String cell = query.substring(query.indexOf("cell=")+5).trim();
         int x = Integer.parseInt(cell.replace(Character.toString(cell.charAt(0)), "")) - 1;
         int y = cell.charAt(0) - 65;
         String shipState; Boolean shipLeft; String body;
@@ -53,9 +61,36 @@ public class Fire implements HttpHandler {
         }
         Launcher launcher = new Launcher();
         launcher.displayGrid(gameGrid);
+        String s = exchange.getRequestHeaders().getFirst("Host");
+        int port = Integer.parseInt(s.substring(s.indexOf("localhost:")+10).trim());
+        String query = exchange.getRequestURI().getQuery();
+        int adversaryPort = Integer.parseInt(query.substring(query.indexOf("port=")+5).trim().split("&")[0]);
 
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(body.getBytes());
         }
+
+        if (gameGrid.isShipLeftOnGrid())
+        {
+            this.randomFire(port, adversaryPort);
+        }
+    }
+
+    public void randomFire(int port, int adversaryPort) {
+        Random random = new Random();
+
+        char randomLetter = (char)(random.nextInt(10) + 65);
+        int randomY = random.nextInt(11);
+        String coordinates = randomLetter + Integer.toString(randomY);
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest getRequest = HttpRequest.newBuilder()
+            .uri(URI.create("http://localhost:" + adversaryPort + "/api/game/fire?port=" + port + "&cell=" + coordinates))
+            .setHeader("Accept", "application/json")
+            .setHeader("Content-Type", "application/json")
+            .GET()
+            .build();
+
+        client.sendAsync(getRequest, HttpResponse.BodyHandlers.ofString());
     }
 }
