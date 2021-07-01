@@ -47,8 +47,6 @@ public class Fire implements HttpHandler {
 
     public void handle(HttpExchange exchange) throws IOException {
         String body;
-        System.out.print(String.format("\033[H\033[2J"));
-
         try {
             body = constructResponseBody(exchange);
             exchange.getResponseHeaders().set("Content-type", "application/json");
