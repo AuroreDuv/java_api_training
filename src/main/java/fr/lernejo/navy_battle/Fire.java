@@ -69,10 +69,7 @@ public class Fire implements HttpHandler {
             body = constructResponseBody(exchange);
             exchange.getResponseHeaders().set("Content-type", "application/json");
             exchange.sendResponseHeaders(202, body.length());
-        } catch (Exception e) {
-            e.printStackTrace();
-            body = "Bad Request"; exchange.sendResponseHeaders(400, body.length());
-        }
+        } catch (Exception e) { body = "Bad Request"; exchange.sendResponseHeaders(400, body.length()); }
         StartStopServer startStopServer = new StartStopServer(); startStopServer.displayGrid(gameGrid);
         try (OutputStream os = exchange.getResponseBody()) { os.write(body.getBytes()); }
         int myPort = parsePort(exchange.getRequestHeaders().getFirst("Host"));
