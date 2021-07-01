@@ -9,11 +9,11 @@ public class Ship {
         this.size = size;
     }
 
-    public int get_size() {
+    public int getSize() {
         return this.size;
     }
 
-    public String get_slug() {
+    public String getSlug() {
         return this.slug;
     }
 
@@ -21,7 +21,7 @@ public class Ship {
         for(int i = 0; i < gameGrid.get_grid()[0].length ; i++) {
             for (int j = 0; j < gameGrid.get_grid().length; j++) {
                 Ship ship = gameGrid.get_grid()[i][j];
-                if(ship != null && ship.get_slug().equals(this.get_slug())) {
+                if(ship != null && ship.getSlug().equals(this.getSlug())) {
                     return true;
                 }
             }

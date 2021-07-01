@@ -25,7 +25,7 @@ class GameGrid {
     }
 
     public void placeHorizontalShip(Random random, Ship ship) {
-        int index = 0; List<Integer> locations = new ArrayList<>(); int size = ship.get_size(), randomX = 0, randomY = 0;
+        int index = 0; List<Integer> locations = new ArrayList<>(); int size = ship.getSize(), randomX = 0, randomY = 0;
         while (index < size) {
             if (index == 0) {
                 randomX = random.nextInt(this.width);
@@ -42,7 +42,7 @@ class GameGrid {
     }
 
     public void placeVerticalShip(Random random, Ship ship) {
-        int index = 0; List<Integer> locations = new ArrayList<>(); int size = ship.get_size(), randomX = 0, randomY = 0;
+        int index = 0; List<Integer> locations = new ArrayList<>(); int size = ship.getSize(), randomX = 0, randomY = 0;
         while (index < size) {
             if (index == 0) {
                 randomX = random.nextInt(this.width - size + 1);

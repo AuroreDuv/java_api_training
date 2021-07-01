@@ -11,14 +11,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 class StartGame implements HttpHandler {
-    public void firstRandomFire(HttpExchange exchange, String adversaryUrl) {
-        String url = exchange.getRequestHeaders().getFirst("Host");
-        int port = Integer.parseInt(url.substring(url.indexOf("localhost:")+10).trim());
-        int adversaryPort = Integer.parseInt(adversaryUrl.substring(adversaryUrl.indexOf("localhost:")+10).trim());
-        Fire fire = new Fire(null);
-        fire.randomFire(port, adversaryPort);
-    }
-
     public void handle(HttpExchange exchange) throws IOException {
         String body; String adversaryUrl = "";
         try (InputStream inputSchema = getClass().getResourceAsStream("/schema.json")) { // Get Json Schema for validation
@@ -33,6 +25,10 @@ class StartGame implements HttpHandler {
         }
         try (OutputStream os = exchange.getResponseBody()) { os.write(body.getBytes()); }
 
-        firstRandomFire(exchange, adversaryUrl);
+        // First fire
+        Fire fire = new Fire(null);
+        int myPort = fire.parsePort(exchange.getRequestHeaders().getFirst("Host"));
+        int adversaryPort = fire.parseAdversaryPort(adversaryUrl);
+        fire.randomFire(myPort, adversaryPort);
     }
 }
