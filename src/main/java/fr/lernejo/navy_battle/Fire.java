@@ -56,7 +56,7 @@ public class Fire implements HttpHandler {
         HttpRequest getRequest = HttpRequest.newBuilder()
             .uri(URI.create("http://localhost:" + adversaryPort + "/api/game/fire?cell=" + coordinates))
             .setHeader("Accept", "application/json").setHeader("Content-Type", "application/json")
-            .setHeader("X-Adversary-Port", Integer.toString(adversaryPort)).GET().build();
+            .setHeader("X-Adversary-Port", Integer.toString(myPort)).GET().build();
         client.sendAsync(getRequest, HttpResponse.BodyHandlers.ofString());
     }
 
