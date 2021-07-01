@@ -38,9 +38,7 @@ class GameGrid {
             }
             randomY++; index++;
         }
-        for(int j = 0; j < locations.size(); j++) {
-            grid[randomX][locations.get(j)] = ship;
-        }
+        for(int j = 0; j < locations.size(); j++) { grid[randomX][locations.get(j)] = ship; }
     }
 
     public void placeVerticalShip(Random random, Ship ship) {
@@ -57,9 +55,7 @@ class GameGrid {
             }
             randomX++; index++;
         }
-        for (int j = 0; j < locations.size(); j++) {
-            grid[locations.get(j)][randomY] = ship;
-        }
+        for (int j = 0; j < locations.size(); j++) { grid[locations.get(j)][randomY] = ship; }
     }
 
     public void placeShipsRandomly() {
@@ -71,20 +67,15 @@ class GameGrid {
         for(int i = 0; i < ships.length; i++) {
             randomDirection = random.nextInt(2);
 
-            if (randomDirection == 0) { // horizontal
-                placeHorizontalShip(random, ships[i]);
-            } else { // vertical
-                placeVerticalShip(random, ships[i]);
-            }
+            if (randomDirection == 0) { placeHorizontalShip(random, ships[i]); }
+            else { placeVerticalShip(random, ships[i]); }
         }
     }
 
     public Boolean isShipLeftOnGrid() {
         for(int i = 0; i < this.width ; i++) {
             for (int j = 0; j < this.height; j++) {
-                if(this.grid[i][j] != null) {
-                    return true;
-                }
+                if(this.grid[i][j] != null) { return true; }
             }
         }
         return false;
