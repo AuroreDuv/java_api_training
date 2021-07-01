@@ -73,6 +73,6 @@ public class Fire implements HttpHandler {
         StartStopServer startStopServer = new StartStopServer(); startStopServer.displayGrid(gameGrid);
         try (OutputStream os = exchange.getResponseBody()) { os.write(body.getBytes()); }
         int myPort = parsePort(exchange.getRequestHeaders().getFirst("Host"));
-        if (gameGrid.isShipLeftOnGrid()) { this.randomFire(myPort, adversaryPort); }
+        if (gameGrid.isShipLeftOnGrid()) { Fire fire = new Fire(null); fire.randomFire(myPort, adversaryPort); }
     }
 }
