@@ -22,6 +22,12 @@ public class Launcher {
                 .build();
 
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+
+            // First fire
+            Fire fire = new Fire(null);
+            int myPort = port;
+            int adversaryPort = fire.parseAdversaryPort(adversaryUrl);
+            fire.randomFire(myPort, adversaryPort);
         }
     }
 }
