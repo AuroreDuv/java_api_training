@@ -2,8 +2,6 @@ package fr.lernejo.navy_battle;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -44,8 +42,6 @@ public class Fire implements HttpHandler {
         shipState = getConsequence(x, y);
         shipLeft = gameGrid.isShipLeftOnGrid();
         body = "{\"consequence\": \"" + shipState + "\", \"shipLeft\": " + shipLeft + "}";
-        exchange.getResponseHeaders().set("Content-type", "application/json");
-        exchange.sendResponseHeaders(202, body.length());
         return body;
     }
 
@@ -55,6 +51,8 @@ public class Fire implements HttpHandler {
 
         try {
             body = constructResponseBody(exchange);
+            exchange.getResponseHeaders().set("Content-type", "application/json");
+            exchange.sendResponseHeaders(202, body.length());
         } catch (Exception e) {
             body = "Bad Request";
             exchange.sendResponseHeaders(400, body.length());
@@ -70,8 +68,7 @@ public class Fire implements HttpHandler {
             os.write(body.getBytes());
         }
 
-        if (gameGrid.isShipLeftOnGrid())
-        {
+        if (gameGrid.isShipLeftOnGrid()) {
             this.randomFire(port, adversaryPort);
         }
     }
