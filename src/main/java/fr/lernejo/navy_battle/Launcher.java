@@ -81,7 +81,9 @@ public class Launcher {
             int randomY = random.nextInt(11);
             String coordinates = randomLetter + Integer.toString(randomY);
 
-            HttpRequest getRequest = HttpRequest.newBuilder().uri(URI.create("http://localhost:" + port + "/api/game/fire?cell=" + coordinates))
+            HttpRequest getRequest = HttpRequest.newBuilder()
+                .uri(URI.create(adversaryUrl + "/api/game/fire?cell=" + coordinates))
+                .GET()
                 .build();
             client.sendAsync(getRequest, HttpResponse.BodyHandlers.ofString());
         }
