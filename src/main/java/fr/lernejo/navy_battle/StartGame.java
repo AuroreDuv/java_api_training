@@ -16,7 +16,7 @@ class StartGame implements HttpHandler {
         try (InputStream inputSchema = getClass().getResourceAsStream("/schema.json")) { // Get Json Schema for validation
             JSONObject postRequest = new JSONObject(new JSONTokener(exchange.getRequestBody()));
             SchemaLoader.load(new JSONObject(new JSONTokener(inputSchema))).validate(postRequest); // Json Schema Validation
-            body = "{\"id\": \"2aca7611-0ae4-49f3-bf63-75bef4769028\", \"url\": \"http://" + exchange.getRequestHeaders().getFirst("Host") + "\", \"message\": \"May the best code win\"}";
+            body = "{\"id\": \"2aca7611-0ae4-49f3-bf63-75bef4769028\", \"url\": \"http://" + exchange.getRequestHeaders().getFirst("X-My-Port") + "\", \"message\": \"May the best code win\"}";
             exchange.sendResponseHeaders(202, body.length());
             adversaryUrl = postRequest.getString("url");
         } catch (Exception e) { body = "Bad Request"; exchange.sendResponseHeaders(400, body.length()); }
