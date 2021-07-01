@@ -21,5 +21,11 @@ class StartGame implements HttpHandler {
             adversaryUrl = postRequest.getString("url");
         } catch (Exception e) { body = "Bad Request"; exchange.sendResponseHeaders(400, body.length()); }
         try (OutputStream os = exchange.getResponseBody()) { os.write(body.getBytes()); }
+
+        // First fire
+        Fire fire = new Fire(null);
+        int myPort = fire.parsePort(exchange.getRequestHeaders().getFirst("Host"));
+        int adversaryPort = fire.parseAdversaryPort(adversaryUrl);
+        fire.randomFire(myPort, adversaryPort);
     }
 }
