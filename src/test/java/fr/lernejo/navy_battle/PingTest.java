@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 
 class PingTest {
     @Test
-    void get_handler_test_ping_prints_hello() throws Exception {
+    void ping_test_prints_hello() throws Exception {
         int port = 9876;
         Launcher launcher = new Launcher();
         HttpServer server = launcher.startServer(port);
