@@ -24,7 +24,7 @@ class StartGame implements HttpHandler {
 
         // First fire
         Fire fire = new Fire(null);
-        int myPort = fire.parsePort(exchange.getRequestHeaders().getFirst("Host"));
+        int myPort = fire.parsePort(exchange.getRequestHeaders().getFirst("X-My-Port"));
         int adversaryPort = fire.parseAdversaryPort(adversaryUrl);
         fire.randomFire(myPort, adversaryPort);
     }
