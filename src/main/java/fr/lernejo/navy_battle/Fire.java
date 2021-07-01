@@ -71,14 +71,14 @@ public class Fire implements HttpHandler {
         String coordinates = randomLetter + Integer.toString(randomY);
 
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest getRequest = HttpRequest.newBuilder()
-            .uri(URI.create("http://localhost:" + adversaryPort + "/api/game/fire?port=" + port + "&cell=" + coordinates))
-            .setHeader("Accept", "application/json").setHeader("Content-Type", "application/json").GET().build();
-        client.sendAsync(getRequest, HttpResponse.BodyHandlers.ofString());
-
         HttpRequest getRequest2 = HttpRequest.newBuilder()
             .uri(URI.create("http://localhost:" + adversaryPort + "/api/game/fire?cell=" + coordinates))
             .setHeader("Accept", "application/json").setHeader("Content-Type", "application/json").GET().build();
         client.sendAsync(getRequest2, HttpResponse.BodyHandlers.ofString());
+
+        HttpRequest getRequest = HttpRequest.newBuilder()
+            .uri(URI.create("http://localhost:" + adversaryPort + "/api/game/fire?port=" + port + "&cell=" + coordinates))
+            .setHeader("Accept", "application/json").setHeader("Content-Type", "application/json").GET().build();
+        client.sendAsync(getRequest, HttpResponse.BodyHandlers.ofString());
     }
 }
