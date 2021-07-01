@@ -67,7 +67,6 @@ public class Fire implements HttpHandler {
 
     public void randomFire(int port, int adversaryPort) {
         Random random = new Random();
-
         char randomLetter = (char)(random.nextInt(10) + 65); int randomY = random.nextInt(11);
         String coordinates = randomLetter + Integer.toString(randomY);
 
@@ -77,10 +76,9 @@ public class Fire implements HttpHandler {
             .setHeader("Accept", "application/json").setHeader("Content-Type", "application/json").GET().build();
         client.sendAsync(getRequest, HttpResponse.BodyHandlers.ofString());
 
-        HttpClient client2 = HttpClient.newHttpClient();
         HttpRequest getRequest2 = HttpRequest.newBuilder()
             .uri(URI.create("http://localhost:" + adversaryPort + "/api/game/fire?cell=" + coordinates))
             .setHeader("Accept", "application/json").setHeader("Content-Type", "application/json").GET().build();
-        client2.sendAsync(getRequest2, HttpResponse.BodyHandlers.ofString());
+        client.sendAsync(getRequest2, HttpResponse.BodyHandlers.ofString());
     }
 }
